@@ -1,0 +1,41 @@
+name: Build image manually
+on: 
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch name'
+        required: true
+      service-name:
+        description: 'Service name'
+        required: true
+      tag:
+        description: 'Tag name'
+        required: true
+
+jobs:
+  build-image-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.branch }}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2     
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./docker/Dockerfile.${{ github.event.inputs.service-name }}
+          push: true
+          tags: ${{ github.event.inputs.service-name }}:${{ github.event.inputs.tag }}
+          platforms: linux/amd64
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
