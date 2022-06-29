@@ -14,6 +14,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
+  REPO_USER: rezkyauliapratama
 
 jobs:
   build-image-and-push:
@@ -35,7 +36,7 @@ jobs:
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
           registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
+          username: ${{ env.REPO_USER }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push
@@ -44,7 +45,7 @@ jobs:
           context: .
           file: ./docker/Dockerfile.${{ github.event.inputs.service-name }}
           push: true
-          tags: ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.event.inputs.service-name }}:${{ github.event.inputs.tag }}
+          tags: ${{ env.REGISTRY }}/${{ env.REPO_USER }}/${{ github.event.inputs.service-name }}:${{ github.event.inputs.tag }}
           platforms: linux/amd64
 
       - name: Image digest
