@@ -44,7 +44,7 @@ jobs:
           context: .
           file: ./docker/Dockerfile.${{ github.event.inputs.service-name }}
           push: true
-          tags: ${{ github.event.inputs.service-name }}:${{ github.event.inputs.tag }}
+          tags: ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.event.inputs.service-name }}:${{ github.event.inputs.tag }}
           platforms: linux/amd64
 
       - name: Image digest
