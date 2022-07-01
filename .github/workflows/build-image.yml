@@ -21,13 +21,13 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - name: Building service
-        uses: ./.github/workflows/composite/echo
-        
       - name: Checkout
         uses: actions/checkout@v3
         with:
           ref: ${{ github.event.inputs.branch }}
+          
+      - name: Building service
+        uses: ./.github/workflows/composite/echo
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2     
