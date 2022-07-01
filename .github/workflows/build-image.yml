@@ -19,7 +19,11 @@ env:
 jobs:
   build-image-and-push:
     runs-on: ubuntu-latest
+    environment: production
     steps:
+      - name: Building service
+        uses: ./.github/workflows/composite/echo
+        
       - name: Checkout
         uses: actions/checkout@v3
         with:

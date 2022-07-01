@@ -1,0 +1,10 @@
+name: "Echo secret"
+description: "Print secret in cli for enviroment"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Print secret
+      shell: bash
+      run: 
+        echo ${{ secrets.TEMPORARY_MSG }}
