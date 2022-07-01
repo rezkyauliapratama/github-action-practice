@@ -11,6 +11,10 @@ on:
       tag:
         description: 'Tag name'
         required: true
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 env:
   REGISTRY: ghcr.io
@@ -25,7 +29,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: ${{ github.event.inputs.branch }}
-          
+
       - name: Building service
         uses: ./.github/workflows/composite/echo
 
